@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for project in projects %}
+<div class="card text-left">
+  <h5 class="card-header text-center">{{ project.name }}</h5>
+  <div class="card-body">
+    <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+    {% for task in project.tasks.all %}
+    <a href="{{ task.get_absolute_url }}" class="btn btn-primary">{{ task.name|truncatechars:12 }}</a>
+    {% endfor %}
+  </div>
+  <div class="card-footer text-muted">
+    {% if project.is_active %}
+    Проект активен
+    {% else %}
+    Проект неактивен
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

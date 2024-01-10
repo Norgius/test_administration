@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto&display=swap');
+
+
+body {
+  background-color: rgb(227, 240, 229);
+  color: #0c1018;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.header {
+  padding: 20px 0;
+  background-color: #b9c5e7;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-nav h1 {
+  margin: 15px 40px;
+}
+
+.logo-img {
+  width: 60px;
+}
+
+.card {
+  border: 2px solid #b9c5e7;
+  margin-bottom: 10px;
+}
+
+.card-header,
+.card-footer {
+  background-color: rgb(193, 240, 224);
+}
+
+.card-body {
+  background-color: #edf1e0;
+}
+
+.btn {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
