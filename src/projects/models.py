@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Project(models.Model):
@@ -12,6 +13,14 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
+
+    def get_absolute_url(self):
+        return reverse('projects:main_page')
+
+
+class TaskQuerySet(models.QuerySet):
+    def get_all_joins(self):
+        return self.prefetch_related('employees').select_related('project')
 
 
 class Task(models.Model):
@@ -38,12 +47,17 @@ class Task(models.Model):
         verbose_name='Проект',
     )
 
+    objects = TaskQuerySet.as_manager()
+
     def __str__(self) -> str:
         return f'{self.name} - {self.deadline}'
 
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
+
+    def get_absolute_url(self):
+        return reverse('projects:task_details', kwargs={'pk': self.id})
 
 
 class Employee(models.Model):
