@@ -75,3 +75,21 @@ class Employee(models.Model):
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+
+
+class Comment(models.Model):
+    text = models.TextField('Tекст')
+    written_in = models.DateTimeField('Дата написания', auto_now_add=True)
+    task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Задача',
+    )
+
+    def __str__(self) -> str:
+        return f'Написан в {self.written_in}'
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
