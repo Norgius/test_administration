@@ -1,11 +1,25 @@
 from django.db import models
+from django.db.models import Prefetch
 from django.urls import reverse
+
+
+class ProjectQuerySet(models.QuerySet):
+    def filter_projects(self, flag: str | None) -> models.QuerySet:
+        match flag:
+            case '1':
+                return self.filter(is_active=True)
+            case '0':
+                return self.filter(is_active=False)
+            case _:
+                return self
 
 
 class Project(models.Model):
     name = models.CharField('Название', max_length=255, db_index=True)
     description = models.TextField('Описание')
     is_active = models.BooleanField('Активен?', default=True)
+
+    objects = ProjectQuerySet.as_manager()
 
     def __str__(self) -> str:
         return f'{self.name} - активен?: {self.is_active}'
@@ -20,7 +34,11 @@ class Project(models.Model):
 
 class TaskQuerySet(models.QuerySet):
     def get_all_joins(self):
-        return self.prefetch_related('employees').select_related('project')
+        comments = Comment.objects.order_by('-written_in')
+        return self.prefetch_related(
+                Prefetch('comments', comments),
+                'employees',
+            ).select_related('project')
 
 
 class Task(models.Model):
