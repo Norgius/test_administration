@@ -15,7 +15,7 @@
   <header class="header">
     <div class="container">
       <nav class="header-nav">
-        <h1>{{ title }}</h1>
+        <h1>{{ title|capfirst }}</h1>
         {% if title == 'Главная страница' %}
         <a class="logo">
           <img src="{% static 'logo.svg' %}" alt="лого" class="logo-img">
@@ -29,6 +29,9 @@
   <main class="main">
     <div class="container">
       {% block content %}
+      {% endblock %}
+
+      {% block navigation %}
       {% endblock %}
     </div>
   </main>

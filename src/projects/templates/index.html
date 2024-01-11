@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 {% for project in projects %}
 <div class="card text-left">
   <h5 class="card-header text-center">{{ project.name }}</h5>
@@ -19,4 +20,37 @@
   </div>
 </div>
 {% endfor %}
+
+{% endblock %}
+
+
+{% block navigation %}
+
+<ul class="pagination">
+  {% if page_obj.has_previous %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+      <span aria-hidden="true">&laquo;</span>
+    </a>
+  </li>
+  {% endif %}
+  {% for page in paginator.page_range %}
+  {% if page_obj.number == page %}
+  <li class="page-item">
+    <a class="page-link current-page">{{ page }}</a>
+  </li>
+  {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %} <li class="page-item">
+    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+</ul>
+
 {% endblock %}
