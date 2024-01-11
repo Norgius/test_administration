@@ -20,7 +20,18 @@ class MainPage(ListView):
     extra_context = {'title': 'Главная страница'}
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Project.objects.prefetch_related('tasks').all()
+        project_filter = self.request.GET.get('is_active')
+        return Project.objects.filter_projects(project_filter).prefetch_related('tasks')
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        projects_filter = [
+            ['?', 'Все проекты'],
+            ['?is_active=1', 'Активные'],
+            ['?is_active=0', 'Не активные'],
+        ]
+        context['projects_filter'] = projects_filter
+        return context
 
 
 class TaskDelails(DetailView):

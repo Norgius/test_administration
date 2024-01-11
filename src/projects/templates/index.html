@@ -2,9 +2,22 @@
 
 {% block content %}
 
+<details data-filter-title="Фильтр проектов" open>
+  <summary>
+    Фильтр проектов
+  </summary>
+  <ul>
+    {% for pr_filter in projects_filter %}
+    <li>
+      <a href="{{pr_filter.0}}">{{pr_filter.1}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</details>
+
 {% for project in projects %}
 <div class="card text-left">
-  <h5 class="card-header text-center">{{ project.name }}</h5>
+  <h5 class="card-header text-center">{{ project.name|capfirst }}</h5>
   <div class="card-body">
     <p class="card-text">{{ project.description|truncatewords:20 }}</p>
     {% for task in project.tasks.all %}
