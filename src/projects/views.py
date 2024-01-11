@@ -3,6 +3,7 @@ from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.http import Http404
 
 from .models import Project, Task, Employee
 
@@ -23,9 +24,11 @@ class TaskDelails(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['title'] = context['task'].name
+        context['title'] = f'Задача: {context.get("task").name}'
         return context
 
     def get_object(self, queryset: QuerySet[Any] | None = ...) -> Model | None:
         obj = Task.objects.get_all_joins().filter(id=self.kwargs[self.pk_url_kwarg]).first()
-        return obj or None
+        if not obj:
+            raise Http404
+        return obj

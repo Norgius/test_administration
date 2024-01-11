@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Здесь!!!</h1>
+<div class="card text-center">
+  <div class="card-header">
+    {{ task.name|capfirst }}
+  </div>
+  <div class="card-body">
+    <div class="inner-card-body">
+
+      <p class="card-text">{{ task.description }}</p>
+
+      <ul class="task-block">
+        {% if task.employees.all %}
+        <h5>Над задачей работают:</h5>
+        {% for employee in task.employees.all %}
+        <li>{{ employee.name }}</li>
+        {% endfor %}
+        {% else %}
+        <h5>Над задачей пока никто не работает</h5>
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+  <div class="card-footer text-muted">
+    <p>Срок исполнения: {{ task.deadline }}</p>
+    <p>Проект: {{ task.project.name|capfirst }}</p>
+  </div>
+</div>
 {% endblock %}
