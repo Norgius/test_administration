@@ -3,6 +3,9 @@ from random import choice, choices
 
 from django.core.management.base import BaseCommand
 from projects.models import Project, Task, Employee
+from django.conf import settings
+
+base_dir = settings.BASE_DIR
 
 
 class Command(BaseCommand):
@@ -10,10 +13,10 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--multiplier', type=int, default=1, help='Data multiplier')
-        parser.add_argument('--fio', type=str, default='fio.txt', help='File path')
-        parser.add_argument('--positions', type=str, default='positions.txt', help='File path')
-        parser.add_argument('--sentences', type=str, default='sentences.txt', help='File path')
-        parser.add_argument('--words', type=str, default='words.txt', help='File path')
+        parser.add_argument('--fio', type=str, default=base_dir / 'testdata' / 'fio.txt', help='File path')
+        parser.add_argument('--positions', type=str, default=base_dir / 'testdata' / 'positions.txt', help='File path')
+        parser.add_argument('--sentences', type=str, default=base_dir / 'testdata' / 'sentences.txt', help='File path')
+        parser.add_argument('--words', type=str, default=base_dir / 'testdata' / 'words.txt', help='File path')
         parser.add_argument('--deadline', type=str, help='Deadline for task "day-month-year"-"30-01-2024"')
 
     def handle(self, *args, **kwargs):
