@@ -12,7 +12,7 @@
  * ALLOWED_HOSTS
  * POSTGRES_DSN (пример: `postgres://postgres:postgres@db:5432/postgres`)
  * DEBUG
- * PAGINATION_BY (нумерация страниц по количеству данных, `по умолчанию - 100`)
+ * PAGINATE_BY (нумерация страниц по количеству данных, `по умолчанию - 100`)
 
 ## _Development_
 
