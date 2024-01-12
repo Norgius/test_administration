@@ -20,6 +20,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_filter = ['status']
     search_fields = ['name', 'project__name']
     readonly_fields = ['deadline']
+    raw_id_fields = ['project']
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)
@@ -42,3 +43,4 @@ class EmployeeAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['written_in', 'task']
     readonly_fields = ['written_in']
+    raw_id_fields = ['task']
