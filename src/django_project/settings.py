@@ -145,3 +145,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+PAGINATE_BY = env.int('PAGINATE_BY', 100)

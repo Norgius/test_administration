@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, View
 from django.http.request import HttpRequest
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
+from django.conf import settings
 
 from .models import Project, Task, Comment
 from .forms import CommentForm
@@ -15,7 +16,7 @@ from .forms import CommentForm
 class MainPage(ListView):
     template_name = 'index.html'
     context_object_name = 'projects'
-    paginate_by = 100
+    paginate_by = settings.PAGINATE_BY
     allow_empty = False
     extra_context = {'title': 'Главная страница'}
 
