@@ -64,6 +64,10 @@ body {
   background-color: rgb(193, 240, 224);
 }
 
+.card-header h5 {
+  margin: 5px 0;
+}
+
 .card-footer {
   display: flex;
   flex-direction: row;
