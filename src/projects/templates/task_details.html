@@ -12,7 +12,13 @@
 
       <ul class="task-block">
         {% if task.employees.all %}
+
+        {% if task.project.is_active %}
         <h5>Над задачей работают:</h5>
+        {% else %}
+        <h5>Над задачей работали:</h5>
+        {% endif %}
+
         {% for employee in task.employees.all %}
         <li>{{ employee.name }}</li>
         {% endfor %}
