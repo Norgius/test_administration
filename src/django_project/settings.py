@@ -154,21 +154,26 @@ AUTH_USER_MODEL = 'users.User'
 
 PAGINATE_BY = env.int('PAGINATE_BY', 100)
 
+API_PAGE_SIZE = env.int('API_PAGE_SIZE', 50)
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 50,
+    'PAGE_SIZE': API_PAGE_SIZE,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+    'DATETIME_FORMAT': "%d.%m.%Y %H:%M:%S",
 }
 
 SPECTACULAR_SETTINGS = {
@@ -176,4 +181,14 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Description test project',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    "SWAGGER_UI_SETTINGS": {
+        "filter": True,
+    },
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
+DJOSER = {
+    'PERMISSIONS': {
+        'user_list': ['rest_framework.permissions.IsAdminUser'],
+    }
 }
