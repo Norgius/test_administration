@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Prefetch
 from django.urls import reverse
 
 
@@ -34,11 +33,7 @@ class Project(models.Model):
 
 class TaskQuerySet(models.QuerySet):
     def get_all_joins(self):
-        comments = Comment.objects.order_by('-written_in')
-        return self.prefetch_related(
-                Prefetch('comments', comments),
-                'employees',
-            ).select_related('project')
+        return self.prefetch_related('comments', 'employees').select_related('project')
 
 
 class Task(models.Model):
@@ -109,5 +104,6 @@ class Comment(models.Model):
         return f'Написан в {self.written_in}'
 
     class Meta:
+        ordering = ['-written_in']
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
