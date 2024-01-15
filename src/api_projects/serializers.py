@@ -72,16 +72,14 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
         m2m_fields = []
         for attr, value in validated_data.items():
             if attr in info.relations and info.relations[attr].to_many:
-                new_tasks, for_removing = [], []
+                new_value = []
                 employee_tasks = instance.tasks.all()
-                for item in value:
-                    if item in employee_tasks:
-                        for_removing.append(item)
+                for element in value:
+                    if element in employee_tasks:
+                        instance.tasks.remove(element)
                     else:
-                        new_tasks.append(item)
-                if for_removing:
-                    [instance.tasks.remove(task) for task in for_removing]
-                m2m_fields.append((attr, new_tasks))
+                        new_value.append(element)
+                m2m_fields.append((attr, new_value))
             else:
                 setattr(instance, attr, value)
 
