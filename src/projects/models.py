@@ -86,6 +86,7 @@ class Employee(models.Model):
         return self.name
 
     class Meta:
+        indexes = [models.Index(fields=['name'])]
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
 
